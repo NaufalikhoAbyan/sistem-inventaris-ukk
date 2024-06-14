@@ -25,10 +25,7 @@
                     <option value="BTHP">BTHP</option>
                 </select>
             </div>
-            <div class="flex gap-2">
-                <button type="submit" class="button-primary w-fit">Edit</button>
-                <button @click="form.reset()" class="button-primary bg-admin-warning w-fit">Reset</button>
-            </div>
+            <button type="submit" class="button-primary w-fit">Edit</button>
         </div>
         <div v-if="form.errors">
             <div class="text-admin-danger font-bold" v-for="error in form.errors">
