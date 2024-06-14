@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .line {
+        @apply bg-white opacity-15 w-full h-[2px] my-4
+    }
+
+    .menu-active {
+        @apply opacity-100
+    }
+
+    .card {
+        @apply border w-fit p-5 rounded-lg bg-white shadow-md
+    }
+
+    .button-primary{
+        @apply rounded-lg bg-primary p-2 text-white font-bold hover:opacity-75 active:bg-primary-dark active:opacity-100
+    }
+}
