@@ -18,7 +18,7 @@
                     <img src="/images/kategori_icon.svg" alt="dashboard icon" class="h-3.5 w-3.5">
                     <p class="font-bold text-sm">Kategori</p>
                 </Link>
-                <Link href="#" class="w-full flex items-center gap-2 mt-8" id="kategori" :class="[ route().current('barang.*') ? 'opacity-100' : 'opacity-50' ]">
+                <Link :href="route('barang.index')" class="w-full flex items-center gap-2 mt-8" id="kategori" :class="[ route().current('barang.*') ? 'opacity-100' : 'opacity-50' ]">
                     <img src="/images/barang_icon.svg" alt="dashboard icon" class="h-3.5 w-3.5">
                     <p class="font-bold text-sm">Barang</p>
                 </Link>

@@ -85,7 +85,7 @@ class KategoriController extends Controller
             $kategori->delete();
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->route('kategori.index')->withErrors(['error' => 'Data tidak dapat dihapus karena sedang digunakan oleh data lain']);
         }
         DB::commit();
         return redirect()->route('kategori.index');

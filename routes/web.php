@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KategoriController;
+use \App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,4 +12,5 @@ Route::get('/dashboard', function () {
     return inertia('Index');
 })->name('dashboard');
 
-Route::resource('/kategori', KategoriCOntroller::class);
+Route::resource('/kategori', KategoriController::class);
+Route::resource('/barang', BarangController::class);

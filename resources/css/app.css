@@ -18,4 +18,8 @@
     .button-primary{
         @apply rounded-lg bg-primary p-2 text-white font-bold hover:opacity-75 active:bg-primary-dark active:opacity-100
     }
+
+    .form-input {
+        @apply flex flex-col gap-2
+    }
 }
