@@ -1,23 +1,23 @@
 <template>
     <div class="flex flex-col gap-2">
-        <Link :href="route('barang-masuk.index')">
+        <Link :href="route('barang-keluar.index')">
             <div class="opacity-25 flex text-2xl gap-2">
                 <img src="/images/back_icon.svg" alt="" class="h-8">
                 <p>Back</p>
             </div>
         </Link>
-        <p class="text-[28px] opacity-60">Edit Barang Masuk</p>
+        <p class="text-[28px] opacity-60">Edit Barang Keluar</p>
     </div>
 
-    <form @submit.prevent="form.put(route('barang-masuk.update', props.barang_masuk.id))">
+    <form @submit.prevent="form.put(route('barang-keluar.update', props.barang_keluar.id))">
         <div class="py-4 flex flex-col gap-4">
             <div>
-                <p class="opacity-75 flex text-xl font-bold">Tanggal Masuk</p>
-                <input type="date" class="text-xl p-2 rounded-lg border border-primary-dark w-1/4" name="tanggal_masuk" v-model="form.tanggal_masuk">
+                <p class="opacity-75 flex text-xl font-bold">Tanggal Keluar</p>
+                <input type="date" class="text-xl p-2 rounded-lg border border-primary-dark w-1/4" name="tanggal_keluar" v-model="form.tanggal_keluar">
             </div>
             <div>
                 <p class="opacity-75 flex text-xl font-bold">Kuantitas</p>
-                <input type="text" class="text-xl p-2 rounded-lg border border-primary-dark w-1/4" name="kuantitas_masuk" v-model.number="form.kuantitas_masuk">
+                <input type="text" class="text-xl p-2 rounded-lg border border-primary-dark w-1/4" name="kuantitas_keluar" v-model.number="form.kuantitas_keluar">
             </div>
             <div>
                 <p class="opacity-75 flex text-xl font-bold">Item Id</p>
@@ -40,13 +40,13 @@
 import { Link, useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
-    'barang_masuk': Object,
+    'barang_keluar': Object,
     'barang': Object
 })
 
 const form = useForm({
-    'tanggal_masuk': props.barang_masuk.tanggal_masuk,
-    'kuantitas_masuk': props.barang_masuk.kuantitas_masuk,
-    'barang_id': props.barang_masuk.barang_id,
+    'tanggal_keluar': props.barang_keluar.tanggal_keluar,
+    'kuantitas_keluar': props.barang_keluar.kuantitas_keluar,
+    'barang_id': props.barang_keluar.barang_id,
 })
 </script>
