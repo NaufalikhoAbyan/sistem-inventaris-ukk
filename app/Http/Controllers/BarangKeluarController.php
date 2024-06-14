@@ -34,13 +34,18 @@ class BarangKeluarController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'tanggal_keluar' => 'required',
+            'kuantitas_keluar' => ['required', 'min:1', 'integer'],
+            'barang_id' => 'required',
+        ]);
+        $barang = Barang::find($request->barang_id);
+        if($barang->stok - $request->kuantitas_keluar < 0){
+            return redirect()->back()->with(['error' => 'Stok barang akan menjadi kurang dari 0!']);
+        }
         DB::beginTransaction();
         try {
-            BarangKeluar::create($request->validate([
-                'tanggal_keluar' => 'required',
-                'kuantitas_keluar' => ['required', 'min:0', 'integer'],
-                'barang_id' => 'required',
-            ]));
+            BarangKeluar::create($data);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with(['error' => $e->getMessage()]);
@@ -77,8 +82,12 @@ class BarangKeluarController extends Controller
     {
         $barangKeluar->update($request->validate([
             'tanggal_keluar' => ['date', 'required'],
-            'kuantitas_keluar' => ['integer', 'min:0', 'required']
+            'kuantitas_keluar' => ['integer', 'min:1', 'required']
         ]));
+        $barang = $barangKeluar->barang;
+        if($barang->stok + $barangKeluar->kuantitas_keluar - $request->kuantitas_keluar < 0){
+            return redirect()->back()->with(['error' => 'Stok barang akan menjadi kurang dari 0!']);
+        }
         return redirect()->route('barang-keluar.index');
     }
 

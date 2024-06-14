@@ -38,7 +38,7 @@ class BarangMasukController extends Controller
         try {
             BarangMasuk::create($request->validate([
                 'tanggal_masuk' => 'required',
-                'kuantitas_masuk' => ['integer', 'min:0'],
+                'kuantitas_masuk' => ['integer', 'min:1'],
                 'barang_id' => 'required'
             ]));
         } catch (\Exception $e) {
@@ -77,10 +77,10 @@ class BarangMasukController extends Controller
     {
         $data = $request->validate([
             'tanggal_masuk' => ['date', 'required'],
-            'kuantitas_masuk' => ['integer', 'min:0', 'required']
+            'kuantitas_masuk' => ['integer', 'min:1', 'required']
         ]);
-        $item = Barang::find($barangMasuk['barang_id']);
-        if($item['stok'] - $barangMasuk['kuantitas_masuk'] + $data['kuantitas_masuk'] < 0){
+        $barang = Barang::find($barangMasuk['barang_id']);
+        if($barang['stok'] - $barangMasuk['kuantitas_masuk'] + $data['kuantitas_masuk'] < 0){
             return redirect()->back()->withErrors(['error' => 'Stok barang akan menjadi kurang dari 0!']);
         }
         $barangMasuk->update($data);

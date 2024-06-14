@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\BarangMasuk;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,10 +35,30 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: Buat barang masuk saat menambahkan barang
+        $request->validate([
+            'merk' => ['string', 'required'],
+            'seri' => ['string', 'required'],
+            'spesifikasi' => ['string', 'required'],
+            'stok' => ['integer', 'min:0', 'required'],
+            'kategori_id' => ['integer', 'required'],
+        ]);
+        $data = [
+            'merk' => $request->merk,
+            'seri' => $request->seri,
+            'spesifikasi' => $request->spesifikasi,
+            'stok' => 0,
+            'kategori_id' => $request->kategori_id,
+        ];
         DB::beginTransaction();
         try {
-            Barang::create($request->all());
+            $barangNew = Barang::create($data);
+            if ($request->stok > 0){
+                BarangMasuk::create([
+                    'tanggal_masuk' => date('Y-m-d'),
+                    'kuantitas_masuk' => $request->stok,
+                    'barang_id' => $barangNew->id,
+                ]);
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
