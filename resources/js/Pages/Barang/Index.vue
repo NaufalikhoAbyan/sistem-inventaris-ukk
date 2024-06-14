@@ -7,7 +7,8 @@
             </button>
         </Link>
     </div>
-    <div v-if="$page.props.errors.error" class="text-admin-danger font-bold">{{ $page.props.errors.error }}</div>
+    <div v-if="$page.props.errors.error" class="text-admin-danger font-bold">{{ $page.props.flash }}</div>
+    <div v-if="$page.props.flash.message" class="text-admin-danger font-bold pt-4">{{ $page.props.flash.message }}</div>
     <div class="border rounded-lg bg-white shadow-md mt-4">
         <div class="p-5 bg-admin-gray rounded-t-lg border-b flex justify-between items-center">
             <p class="font-bold text-primary">Tabel Barang</p>
@@ -47,8 +48,9 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 
+const page = usePage()
 const count = 1
 const props = defineProps({
     'barang': Object

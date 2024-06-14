@@ -7,7 +7,7 @@
             </button>
         </Link>
     </div>
-    <div v-if="$page.props.errors.error" class="text-admin-danger font-bold">{{ $page.props.errors.error }}</div>
+    <div v-if="$page.props.errors.error" class="text-admin-danger font-bold pt-4">{{ $page.props.errors.error }}</div>
     <div class="border rounded-lg bg-white shadow-md mt-4">
         <div class="p-5 bg-admin-gray rounded-t-lg border-b flex justify-between items-center">
             <p class="font-bold text-primary">Tabel Kategori</p>

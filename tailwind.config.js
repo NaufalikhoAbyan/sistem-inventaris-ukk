@@ -13,7 +13,8 @@ export default {
                 'admin-gray': '#f8f9fc',
                 'admin-gray-dark': '#858796',
                 'admin-warning': '#f6c23e',
-                'admin-danger': '#e74a3b'
+                'admin-danger': '#e74a3b',
+                'admin-success': '#1cc88a'
             },
             fontFamily: {
                 'nunito': ['Nunito', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Roboto', "Helvetica Neue", 'Arial', 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"],
