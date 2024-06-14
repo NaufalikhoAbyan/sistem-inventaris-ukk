@@ -40,13 +40,13 @@
                         </div>
                         <div class="bg-black opacity-15 h-3/4 w-[2px] mx-4"></div>
                         <div class="flex items-center gap-4 cursor-pointer" @click="isDroppedDown = !isDroppedDown">
-                            <p>Placeholder Username</p>
+                            <p>{{ user.name }}</p>
                             <div class="w-8 aspect-square rounded-full">
                                 <img src="/images/undraw_profile.svg" alt="profile" class="w-full h-full">
                             </div>
                         </div>
                         <div v-if="isDroppedDown" class="bg-white px-4 py-2 rounded-lg border-2 cursor-pointer absolute z-50 right-10 top-16 hover:text-admin-danger">
-                            <Link href="#" method="POST">Logout</Link>
+                            <Link :href="route('logout')" method="POST" as="button">Logout</Link>
                         </div>
                     </div>
                 </div>
@@ -64,6 +64,8 @@ import { Link, usePage } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 
 const page = usePage()
+
+const user = computed(() => page.props.auth.user)
 
 const isDroppedDown = ref(false)
 </script>
