@@ -14,7 +14,7 @@
                     <p class="font-bold text-sm">Dashboard</p>
                 </Link>
                 <div class="line"></div>
-                <Link href="#" class="w-full flex items-center gap-2 mt-8" id="kategori" :class="[ route().current('kategori.*') ? 'opacity-100' : 'opacity-50' ]">
+                <Link :href="route('kategori.index')" class="w-full flex items-center gap-2 mt-8" id="kategori" :class="[ route().current('kategori.*') ? 'opacity-100' : 'opacity-50' ]">
                     <img src="/images/kategori_icon.svg" alt="dashboard icon" class="h-3.5 w-3.5">
                     <p class="font-bold text-sm">Kategori</p>
                 </Link>
