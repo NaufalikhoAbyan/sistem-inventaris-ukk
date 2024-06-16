@@ -51,7 +51,7 @@
 import { Link, usePage } from "@inertiajs/vue3";
 
 const page = usePage()
-const count = 1
+let count = 1
 const props = defineProps({
     'barang': Object
 })

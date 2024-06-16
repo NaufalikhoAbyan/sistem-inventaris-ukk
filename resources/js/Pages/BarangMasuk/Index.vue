@@ -45,7 +45,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 
-const count = 1
+let count = 1
 const props = defineProps({
     'barang_masuk': Object
 })
