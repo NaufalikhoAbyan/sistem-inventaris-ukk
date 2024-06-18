@@ -9,8 +9,19 @@
     </div>
 
     <div class="border rounded-lg bg-white shadow-md mt-4">
-        <div class="p-5 bg-admin-gray rounded-t-lg border-b">
+        <div class="p-5 bg-admin-gray rounded-t-lg border-b flex justify-between items-center">
             <p class="font-bold text-primary">Tabel Barang Keluar</p>
+            <div class="flex items-center gap-2">
+                <button class="button-primary" @click="router.get(route('barang-keluar.index'))">Reset</button>
+                <div>
+                    <input type="date" placeholder="Min tanggal" class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200 w-fit" v-model="filterForm.min_tanggal">
+                    <input type="date" placeholder="Max tanggal" class="flex-grow border-4 py-1.5 px-3 rounded-r-lg focus:border-2 focus:border-blue-200 w-fit" v-model="filterForm.max_tanggal">
+                </div>
+                <div>
+                    <input type="text" placeholder="Min keluar" class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200 w-36" v-model.number="filterForm.min_keluar">
+                    <input type="text" placeholder="Max keluar" class="flex-grow border-4 py-1.5 px-3 rounded-r-lg focus:border-2 focus:border-blue-200 w-36" v-model.number="filterForm.max_keluar">
+                </div>
+            </div>
         </div>
         <div class="p-5 w-full">
             <table class="table w-full table-auto">
@@ -43,10 +54,25 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
+import { reactive, watch } from "vue";
+import { debounce } from "lodash";
 
 let count = 1
 const props = defineProps({
-    'barang_keluar': Object
+    'barang_keluar': Object,
+    'filters': Object
 })
+
+const filterForm = reactive({
+    'min_tanggal': props.filters.min_tanggal,
+    'max_tanggal': props.filters.max_tanggal,
+    'min_keluar': props.filters.min_keluar,
+    'max_keluar': props.filters.max_keluar
+})
+
+watch(filterForm, debounce( () => { router.get(route('barang-keluar.index'), filterForm, {
+    preserveState: true,
+    preserveScroll: true
+}) }, 200 ))
 </script>

@@ -13,10 +13,23 @@ class BarangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $stokFilters = [
+            'min_stok' => $request->integer('min_stok') ? $request->integer('min_stok') : null,
+            'max_stok' => $request->integer('max_stok') ? $request->integer('max_stok') : null,
+        ];
+        $searchFilter = $request->string('search');
+
+        $filters = [
+            'min_stok' => $request->integer('min_stok') ? $request->integer('min_stok') : null,
+            'max_stok' => $request->integer('max_stok') ? $request->integer('max_stok') : null,
+            'search' => $request->string('search')
+        ];
+
         return inertia('Barang/Index', [
-            'barang' => Barang::all()->load('kategori')
+            'barang' => Barang::filterStock($stokFilters)->filterSearch($searchFilter)->with('kategori')->get(),
+            'filters' => $filters
         ]);
     }
 

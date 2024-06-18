@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,5 +37,27 @@ class Barang extends Model
     public function barangKeluar(): HasMany
     {
         return $this->hasMany(BarangKeluar::class);
+    }
+
+    public function scopeFilterSearch(Builder $query, string $filters): Builder
+    {
+        if($filters) {
+            $query
+                ->where('merk', 'like', '%' . $filters . '%')
+                ->orWhere('seri', 'like', '%' . $filters . '%')
+                ->orWhere('spesifikasi', 'like', '%' . $filters . '%');
+        }
+        return $query;
+    }
+
+    public function scopeFilterStock(Builder $query, array $filters): Builder
+    {
+        if(isset($filters['min_stok'])) {
+            $query->where('stok', '>=', $filters['min_stok']);
+        }
+        if(isset($filters['max_stok'])) {
+            $query->where('stok', '<=', $filters['max_stok']);
+        }
+        return $query;
     }
 }

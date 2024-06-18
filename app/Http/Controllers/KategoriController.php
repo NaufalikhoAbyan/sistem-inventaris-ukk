@@ -11,10 +11,19 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = [
+            'A' => $request->boolean("A"),
+            'M' => $request->boolean("M"),
+            'BHP' => $request->boolean("BHP"),
+            'BTHP' => $request->boolean("BTHP"),
+            'search' => $request->string("search"),
+        ];
+
         return inertia('Kategori/Index', [
-            'kategori' => Kategori::all()
+            'kategori' => Kategori::filterCategory($filters)->filterSearch($filters)->get(),
+            'filters' => $filters
         ]);
     }
 

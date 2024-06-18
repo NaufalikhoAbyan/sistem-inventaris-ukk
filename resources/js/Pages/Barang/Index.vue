@@ -12,6 +12,19 @@
     <div class="border rounded-lg bg-white shadow-md mt-4">
         <div class="p-5 bg-admin-gray rounded-t-lg border-b flex justify-between items-center">
             <p class="font-bold text-primary">Tabel Barang</p>
+            <div class="flex items-center gap-2">
+                <button class="button-primary" @click="router.get(route('barang.index'))">Reset</button>
+                <div>
+                    <input type="text" placeholder="Min stok" class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200 w-24" v-model.number="filterForm.min_stok">
+                    <input type="text" placeholder="Max stok" class="flex-grow border-4 py-1.5 px-3 rounded-r-lg focus:border-2 focus:border-blue-200 w-24" v-model.number="filterForm.max_stok">
+                </div>
+                <div class="w-[400px] h-[38px] rounded-md overflow-hidden flex">
+                    <input type="text" placeholder="search for..." class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200" v-model="filterForm.search">
+                    <div class="w-10 h-full bg-primary rounded-r-lg flex items-center justify-center">
+                        <img src="/images/search_icon.svg" alt="search" class="w-3.5">
+                    </div>`
+                </div>
+            </div>
         </div>
         <div class="p-5 w-full">
             <table class="table w-full table-auto">
@@ -48,11 +61,25 @@
 </template>
 
 <script setup>
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link, usePage, router } from "@inertiajs/vue3"
+import { reactive, watch } from "vue"
+import { debounce } from "lodash"
 
 const page = usePage()
 let count = 1
 const props = defineProps({
-    'barang': Object
+    'barang': Object,
+    'filters': Object
 })
+
+const filterForm = reactive({
+    'min_stok': props.filters.min_stock,
+    'max_stok': props.filters.max_stock,
+    'search' : props.filters.search
+})
+
+watch(filterForm, debounce( () => { router.get(route('barang.index'), filterForm, {
+    preserveState: true,
+    preserveScroll: true
+}) }, 200 ))
 </script>

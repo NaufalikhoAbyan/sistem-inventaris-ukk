@@ -9,8 +9,19 @@
     </div>
     <div v-if="$page.props.errors.error" class="text-admin-danger font-bold">{{ $page.props.errors.error }}</div>
     <div class="border rounded-lg bg-white shadow-md mt-4">
-        <div class="p-5 bg-admin-gray rounded-t-lg border-b">
+        <div class="p-5 bg-admin-gray rounded-t-lg border-b flex justify-between items-center">
             <p class="font-bold text-primary">Tabel Barang Masuk</p>
+            <div class="flex items-center gap-2">
+                <button class="button-primary" @click="router.get(route('barang-masuk.index'))">Reset</button>
+                <div>
+                    <input type="date" placeholder="Min tanggal" class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200 w-fit" v-model="filterForm.min_tanggal">
+                    <input type="date" placeholder="Max tanggal" class="flex-grow border-4 py-1.5 px-3 rounded-r-lg focus:border-2 focus:border-blue-200 w-fit" v-model="filterForm.max_tanggal">
+                </div>
+                <div>
+                    <input type="text" placeholder="Min masuk" class="flex-grow border-4 py-1.5 px-3 rounded-l-lg focus:border-2 focus:border-blue-200 w-36" v-model.number="filterForm.min_masuk">
+                    <input type="text" placeholder="Max masuk" class="flex-grow border-4 py-1.5 px-3 rounded-r-lg focus:border-2 focus:border-blue-200 w-36" v-model.number="filterForm.max_masuk">
+                </div>
+            </div>
         </div>
         <div class="p-5 w-full">
             <table class="table w-full table-auto">
@@ -43,10 +54,25 @@
 </template>
 
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3"
+import { reactive, watch } from "vue"
+import { debounce } from "lodash";
 
 let count = 1
 const props = defineProps({
-    'barang_masuk': Object
+    'barang_masuk': Object,
+    'filters': Object
 })
+
+const filterForm = reactive({
+    'min_tanggal': props.filters.min_tanggal,
+    'max_tanggal': props.filters.max_tanggal,
+    'min_masuk': props.filters.min_masuk,
+    'max_masuk': props.filters.max_masuk
+})
+
+watch(filterForm, debounce( () => { router.get(route('barang-masuk.index'), filterForm, {
+    preserveState: true,
+    preserveScroll: true
+}) }, 200 ))
 </script>

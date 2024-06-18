@@ -12,10 +12,18 @@ class BarangKeluarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $filters = [
+            'min_tanggal' => $request->date('min_tanggal') ? $request->date('min_tanggal') : null,
+            'max_tanggal' => $request->date('max_tanggal') ? $request->date('max_tanggal') : null,
+            'min_keluar' => $request->integer('min_keluar') ? $request->integer('min_keluar') : null,
+            'max_keluar' => $request->integer('max_keluar') ? $request->integer('max_keluar') : null
+        ];
+
         return inertia('BarangKeluar/Index', [
-            'barang_keluar' => BarangKeluar::all()->load('barang')
+            'barang_keluar' => BarangKeluar::filterDate($filters)->filterQuantity($filters)->with('barang')->get(),
+            'filters' => $filters
         ]);
     }
 
